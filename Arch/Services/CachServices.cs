@@ -10,5 +10,7 @@ namespace Arch.Services
     public class CachServices
     {
         public Operation? last_operation { get; set; } = null;
+
+        public Record? last_record { get; set; } = null;
     }
 }

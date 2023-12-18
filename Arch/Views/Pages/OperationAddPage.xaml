@@ -22,14 +22,14 @@
 
             <StackPanel Margin="10 0">
                 <Label FontSize="13pt" Margin="10 10 0 0" Content="ID:"></Label>
-                <ui:TextBox Margin="10 0 10 10" IsReadOnly="True" Text="{Binding ViewModel.NewOperation.Id}" />
+                <ui:TextBox Margin="10 0 10 10" IsReadOnly="True" Text="{Binding ViewModel.NewOperation.Id, Mode=TwoWay}" />
                 <Label FontSize="13pt"  Margin="10 10 0 0" Content="Name:"/>
-                <ui:TextBox  Margin="10 0 10 10"  PlaceholderText="Name" Text="{Binding ViewModel.NewOperation.Name}" />
+                <ui:TextBox  Margin="10 0 10 10"  PlaceholderText="Name" Text="{Binding ViewModel.NewOperation.Name, Mode=TwoWay}" />
                 <Label FontSize="13pt"  Margin="10 10 0 0" Content="Amount:"/>
-                <ui:TextBox Margin="10 0 10 10"  PlaceholderText="Amount" Text="{Binding ViewModel.NewOperation.Amount}" />
+                <ui:TextBox Margin="10 0 10 10"  PlaceholderText="Amount" Text="{Binding ViewModel.NewOperation.Amount, Mode=TwoWay}" />
 
                 <Label FontSize="13pt" Margin="10 10 0 0" Content="Type:"></Label>
-                <RadioButton  Margin="10 0"  IsChecked="{Binding ViewModel.IsDomand}"  Content="Demand"  />
+                <RadioButton  Margin="10 0"  IsChecked="{Binding ViewModel.IsDomand, Mode=TwoWay}"  Content="Demand"  />
                 <RadioButton  Margin="10 0"   Content="Consultation" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">

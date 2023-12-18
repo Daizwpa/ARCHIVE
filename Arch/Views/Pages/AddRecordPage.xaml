@@ -6,9 +6,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       Title="Add operation"
-      d:DataContext="{d:DesignInstance local:DashboardPage,
+      d:DataContext="{d:DesignInstance local:AddRecordPage,
                                        IsDesignTimeCreatable=False}"
-      d:DesignHeight="600"
+      d:DesignHeight="650"
       d:DesignWidth="500"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -21,25 +21,37 @@
             <Label FontSize="18pt" Margin="10 10 0 0" Content="Record:"/>
 
             <StackPanel Margin="10 0">
-                <Label FontSize="13pt" Margin="10 10 0 0" Content="ID (Operation):"></Label>
-                <ui:TextBox Margin="10 0 10 10" IsReadOnly="True" />
+                <Label FontSize="13pt" Margin="10 10 0 0" Content="Name (Operation):"></Label>
+                <ui:TextBox Text="{Binding ViewModel.Selectedoperation.Name}" Margin="10 0 10 10" IsReadOnly="True" />
                 
                 <Label FontSize="13pt" Margin="10 10 0 0" Content="ID:"></Label>
-                <ui:TextBox Margin="10 0 10 10" IsReadOnly="True" />
+                <ui:TextBox Text="{Binding ViewModel.Newrecord.Id}" Margin="10 0 10 10" IsReadOnly="True" />
                 
                 <Label FontSize="13pt"  Margin="10 10 0 0" Content="Name:"/>
-                <ui:TextBox  Margin="10 0 10 10"  PlaceholderText="Name" />
+                <ui:TextBox Text="{Binding ViewModel.Newrecord.Name}"  Margin="10 0 10 10"  PlaceholderText="Name" />
                 
                 <Label FontSize="13pt"  Margin="10 10 0 0" Content="Amount:"/>
-                <ui:TextBox Margin="10 0 10 10"  PlaceholderText="Amount" />
+                <ui:TextBox Text="{Binding ViewModel.Newrecord.Amount}" Margin="10 0 10 10"  PlaceholderText="Amount" />
 
                 <Label FontSize="13pt"  Margin="10 10 0 0" Content="Date:"/>
-                <DatePicker Margin="10 0 10 10"   />
+                <DatePicker SelectedDate="{Binding ViewModel.Newrecord.date}" Margin="10 0 10 10"   />
 
+                <Label FontSize="13pt"  Margin="10 10 0 0" Content="File:"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ui:TextBox Grid.Column="0" Text="{Binding ViewModel.Newrecord.FilePath}" Margin="10 0 10 10"  PlaceholderText="File Path" />
+
+                    <ui:Button Grid.Column="1" Appearance="Primary" Command="{Binding ViewModel.uploadFileCommand }"   Icon="" Width="70" Height="38">
+                        <ui:SymbolIcon Filled="True" Symbol="DocumentOnePage20"/>
+                    </ui:Button>
+                </Grid>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
 
-                    <ui:Button Appearance="Primary" Command="{Binding ViewModel.openWindowCommand }"   Icon="" Width="138" Height="43">
+                    <ui:Button Appearance="Primary" Command="{Binding ViewModel.saveCommand }"   Icon="" Width="138" Height="43">
                         <ui:SymbolIcon Symbol="SaveArrowRight24" Filled="True"/>
                     </ui:Button>
                 </StackPanel>

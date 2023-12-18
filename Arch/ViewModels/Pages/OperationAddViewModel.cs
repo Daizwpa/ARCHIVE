@@ -1,4 +1,5 @@
-﻿using Arch.Services;
+﻿using Arch.Models;
+using Arch.Services;
 using Arch.Views.Pages;
 using Core.Models;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -16,39 +17,57 @@ namespace Arch.ViewModels.Pages
 
         private readonly Connection connction;
         private readonly IContentDialogService _contentDialogService;
-
+        private readonly CachServices _cachServices;
 
         [ObservableProperty]
-        private Operation _newOperation;
+        private Operation _newOperation = new Operation();
 
         [ObservableProperty]
         private bool isDomand = true;
         [ObservableProperty]
         private bool isConsultation = false;
 
-        public OperationAddViewModel(Connection connection, IContentDialogService contentDialogService) {
+
+        public Action Exist { get; set; }
+
+
+        public OperationAddViewModel(Connection connection, IContentDialogService contentDialogService, CachServices cachServices) {
             this.connction = connection;
             this._contentDialogService = contentDialogService;
-            Initial();
+            this._cachServices = cachServices;
+            
 
 
         }
 
 
-
-        private void Initial()
+        public void Clean()
         {
 
             try
             {
-   
-                this.NewOperation = new Operation();
-                this.NewOperation.Id = connction.Context.operations.Max(o => o.Id) + 1;
+                if(_cachServices.last_operation == null) {
+                   this.NewOperation = new Operation();
+
+                     
+                    this.NewOperation.Id = (connction.Context.operations.Count() !=0)? connction.Context.operations.Max(o => o.Id) + 1: 1;
+                    
+                    
+
+                    this.OnPropertyChanged(nameof(NewOperation));   
+
+                }
+                else
+                {
+                    this.NewOperation = connction.Context.operations.Where(s=> s.Id == _cachServices.last_operation.Id).FirstOrDefault()?? throw  new Exception ("There is no such this operation");
+                }
+
+
 
             }
             catch(Exception ex)
             {
-                _contentDialogService.ShowAlertAsync("Error", ex.Message, "OK");
+                System.Windows.MessageBox.Show(ex.Message);
             }
 
         }
@@ -60,21 +79,36 @@ namespace Arch.ViewModels.Pages
         {
             try
             {
+                if(_cachServices.last_operation == null)
+                {
 
-                ReadTypeOperation();
-                connction.Context.operations.Add(NewOperation);
-                connction.Context.SaveChanges();
-                Initial();
+
+                    ReadTypeOperation();
+                    connction.Context.operations.Add(NewOperation);
+                    connction.Context.SaveChanges();
+
+                }
+                else
+                {
+                    ReadTypeOperation();
+                    connction.Context.operations.Update(NewOperation);
+                    connction.Context.SaveChanges();
+                }
+
+                System.Windows.MessageBox.Show("Done!");
+                Clean();
+
+                Exist?.Invoke();
+
                 
 
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _contentDialogService.ShowAlertAsync("Error", ex.Message, "OK");
+                System.Windows.MessageBox.Show(ex.Message);
             }
             
-
-
         }
 
 
@@ -90,6 +124,7 @@ namespace Arch.ViewModels.Pages
 
             }
         }
+
 
     }
 }

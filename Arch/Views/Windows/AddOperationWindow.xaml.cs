@@ -1,6 +1,7 @@
 ﻿using Arch.ViewModels.Windows;
 using Arch.Views.Pages;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,11 +22,27 @@ namespace Arch.Views.Windows
     /// </summary>
     public partial class AddOperationWindow 
     {
-        private AddOperationWindowViewModel ViewModel { get; } = new AddOperationWindowViewModel();
+        private AddOperationWindowViewModel ViewModel { get; }
         public Page CurrentPage { get; set; }
         
-        public AddOperationWindow(decimal id, Page page)
+        public AddOperationWindow(decimal id, Page page, AddOperationWindowViewModel viewModel )
         {
+            this.ViewModel = viewModel;
+
+            if(page.GetType() == typeof(OperationAddPage))
+            {
+                OperationAddPage x = page as OperationAddPage;
+                x.ViewModel.Clean();
+
+                x.ViewModel.Exist = ()=>this.Close();
+            }
+            else
+            {
+                AddRecordPage x = page as AddRecordPage;
+                x.ViewModel.Clean();
+                x.ViewModel.Exist = () => this.Close();
+            }
+
             CurrentPage = page;
             this.DataContext = this;
             InitializeComponent();

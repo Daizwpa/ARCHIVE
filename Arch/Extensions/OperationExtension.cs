@@ -14,11 +14,11 @@ namespace Arch.Extensions
         {
             try
             {
-                return new Operation() { Id= origial.Id, Amount = origial.Amount, Name = origial.Name, Type = origial.Type };
+                return new Operation() { Id= origial.Id, Amount = origial.Amount, Name = origial.Name, Type = origial.Type, Records=origial.Records };
             }
             catch
             {
-                return new Operation() { Amount = 0.00M, Name = "Empty", Type = "Empty" };
+                return new Operation() { Id=-1, Amount = 0.00M, Name = "Empty", Type = "Empty" };
             }
         }
     }

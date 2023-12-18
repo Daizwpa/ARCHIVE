@@ -15,6 +15,6 @@ namespace Core.Models
         public decimal Amount { get; set; }
 
 
-        public ICollection<Record> Records { get; set; }
+        public ICollection<Record> Records { get; set; } = new List<Record>();
     }
 }

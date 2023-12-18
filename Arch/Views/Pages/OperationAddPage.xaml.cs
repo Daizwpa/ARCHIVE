@@ -28,6 +28,7 @@ namespace Arch.Views.Pages
             
         {
             this.ViewModel = ViewModel;
+            
             this.DataContext = this;
             InitializeComponent();
         }

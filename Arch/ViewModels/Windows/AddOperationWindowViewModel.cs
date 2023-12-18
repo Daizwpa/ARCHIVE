@@ -13,6 +13,11 @@ namespace Arch.ViewModels.Windows
         private string _applicationTitle = "Add";
 
 
+        public AddOperationWindowViewModel()
+        {
+
+
+        }
 
     }
 }

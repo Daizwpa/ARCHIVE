@@ -22,7 +22,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
-        <DataGrid SelectedItem="{Binding ViewModel.Selected_operation}" HeadersVisibility="Column"  AutoGenerateColumns="False" FontSize="14pt" FontFamily="Segoe UI" RowHeight="35" SelectionMode="Single" IsReadOnly="True"  CanUserAddRows="False" Grid.Row="0" ItemsSource="{Binding ViewModel.Operations, Mode=TwoWay}" >
+        <DataGrid VerticalScrollBarVisibility="Visible" SelectedItem="{Binding ViewModel.Selected_operation}" HeadersVisibility="Column"  AutoGenerateColumns="False" FontSize="14pt" FontFamily="Segoe UI" RowHeight="35" SelectionMode="Single" IsReadOnly="True"  CanUserAddRows="False" Grid.Row="0" ItemsSource="{Binding ViewModel.Operations, Mode=TwoWay}" >
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
 
@@ -34,6 +34,21 @@
 
                 </Style>
             </DataGrid.RowStyle>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Edit" Command="{Binding ViewModel.editCommand}">
+                        <MenuItem.Icon>
+                            <ui:SymbolIcon Symbol="Edit20"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Delete" Command="{Binding ViewModel.deleteCommand}">
+                        <MenuItem.Icon>
+                            <ui:SymbolIcon Symbol="Delete12"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                </ContextMenu>
+            </DataGrid.ContextMenu>
 
             
             <DataGrid.Columns>
@@ -47,7 +62,7 @@
         </DataGrid>
 
         <StackPanel Margin="20" VerticalAlignment="Top" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <ui:AutoSuggestBox Margin="10 0"  Width="500" PlaceholderText="Search..." />
+            <ui:AutoSuggestBox ItemsSource="{Binding ViewModel.Operations}" Text="{Binding ViewModel.Query, Mode=TwoWay}"   Margin="10 0"   Width="500" PlaceholderText="Search..." />
             <ui:Button Appearance="Primary" Command="{Binding ViewModel.openWindowCommand }"   Icon="" Width="138" Height="43">
                 <ui:SymbolIcon Symbol="Add24"/>
             </ui:Button>
